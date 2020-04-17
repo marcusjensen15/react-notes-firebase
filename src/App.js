@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Note from './Note/Note'
+import Note from './Note/Note';
+import NoteForm from './NoteForm/NoteForm'
 
 class App extends Component {
   constructor(props){
@@ -13,6 +14,14 @@ class App extends Component {
         { id: 2, noteContent: "Note 2 here!"},
       ],
     }
+  }
+
+  addNote = (note) => {
+    const previousNote = this.state.notes;
+    previousNote.push({id: previousNote.length +1, noteContent: note});
+    this.setState({notes: previousNote});
+
+
   }
 
 //react needs a stable unique identifier for each item in our array (key). Firebase needs this.
@@ -32,7 +41,7 @@ render(props){
       }
       </div>
       <div className="notesFooter">
-        footer will go here
+        <NoteForm addNote={this.addNote}/>
       </div>
     </div>
 
