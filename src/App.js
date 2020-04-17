@@ -1,26 +1,43 @@
-import React from 'react';
+import React, {Component} from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Note from './Note/Note'
 
-function App() {
+class App extends Component {
+  constructor(props){
+    super(props);
+
+    this.state = {
+      notes: [
+        { id: 1, noteContent: "Note 1 here!"},
+        { id: 2, noteContent: "Note 2 here!"},
+      ],
+    }
+  }
+
+//react needs a stable unique identifier for each item in our array (key). Firebase needs this.
+render(props){
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="notesWrapper">
+      <div className="notesHeader">
+        <div className="heading">React & Firebase To-Do List</div>
+      </div>
+      <div className="notesBody">
+        {
+        this.state.notes.map((note) => {
+          return(
+            <Note noteContent={note.noteContent} noteId={note.id} key={note.id}/>
+          )
+        })
+      }
+      </div>
+      <div className="notesFooter">
+        footer will go here
+      </div>
     </div>
+
   );
+  }
 }
 
 export default App;
