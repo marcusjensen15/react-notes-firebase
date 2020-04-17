@@ -13,12 +13,25 @@ class App extends Component {
     this.db = this.app.database().ref().child('notes');
 
     this.state = {
-      notes: [
-
-      ],
+      notes: [],
     }
   }
 
+  componentWillMount = () => {
+    const previousNotes = this.state.notes;
+
+  //DataSnapshot Object
+
+    this.database.on('child_added', snap => {
+      previousNotes.push({
+        id: snap.key,
+        noteContent: snap.val().noteContent,
+      })
+      this.setState({
+        notes: previousNotes
+      })
+    })
+  }
   addNote = (note) => {
     const previousNote = this.state.notes;
     previousNote.push({id: previousNote.length +1, noteContent: note});
